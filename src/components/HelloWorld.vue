@@ -11,6 +11,13 @@
     />
     <button v-on:click="add">Add</button>
   </div>
+  <div v-if="tickers.length" class="cards">
+    <div v-for="t in tickers" v-bind:key="t.name" class="card">
+      <div class="name">{{ t.name }} - USD</div>
+      <div class="price">{{ t.price }}</div>
+      <button v-on:click="handleDelete(t)">Delete</button>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -22,12 +29,24 @@ export default {
   data() {
     return {
       ticker: "",
-      tickers: ["1", "2", "3"],
+      tickers: [
+        { name: "ffff", price: "3423" },
+        { name: "daddad", price: "64563453" },
+        { name: "baaaaa", price: "34535324" },
+      ],
     };
   },
   methods: {
-    add(evt) {
-      alert(this.ticker);
+    add() {
+      const newTicker = {
+        name: this.ticker,
+        price: "-",
+      };
+      this.tickers.push(newTicker);
+      this.ticker = "";
+    },
+    handleDelete(tickerToRemove) {
+      this.tickers = this.tickers.filter((t) => t !== tickerToRemove);
     },
   },
 };
@@ -61,11 +80,42 @@ button {
   color: whitesmoke;
   font-size: 17px;
   padding: 10px;
-  width: 20%;
+  max-width: 200px;
+  width: 100%;
 }
 button:hover {
   background-color: whitesmoke;
   color: rgba(57, 61, 90, 0.5);
   border: 1px solid rgba(57, 61, 90, 0.5);
+}
+.cards {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  border-bottom: 1px solid rgba(57, 61, 90, 0.5);
+  border-top: 1px solid rgba(57, 61, 90, 0.5);
+  width: fit-content;
+  padding: 20px;
+}
+.card {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 15px;
+  box-shadow: 0px 2px 5px 0px rgb(57 61 90 / 25%),
+    0px 5px 10px rgb(57 61 90 / 22%);
+}
+.name {
+  font-size: 20px;
+  color: rgba(57, 61, 90, 0.7);
+  margin-bottom: 20px;
+}
+.price {
+  margin-bottom: 10px;
+  font-weight: 550;
+  font-size: 18px;
+  color: rgba(57, 61, 90, 0.9);
 }
 </style>
