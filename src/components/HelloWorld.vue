@@ -85,7 +85,7 @@ export default {
           `https://min-api.cryptocompare.com/data/price?fsym=${newTicker.name}&tsyms=USD`
         );
         const data = await f.json();
-        this.tickers.find((t) => t.name === newTicker?.name).price = data.USD;
+        this.tickers.find((t) => t?.name === newTicker?.name).price = data.USD;
         if (this.select?.name === newTicker.name) {
           this.graph.push(data.USD);
         }
